@@ -1,0 +1,77 @@
+#include <iostream>
+using namespace std;
+
+class Queue {
+    int front, rear, size;
+    int *queue;
+
+public:
+    Queue(int s) : size(s), front(0), rear(0) {
+        queue = new int[size];
+    }
+
+    ~Queue() { delete[] queue; }
+
+    void insert(int value) {
+        if (rear == size) {
+            cout << "Queue is full\n";
+        } else {
+            queue[rear++] = value;
+            cout << value << " inserted into the queue\n";
+        }
+    }
+
+    void deleteElement() {
+        if (front == rear) {
+            cout << "Queue is empty\n";
+        } else {
+            cout << queue[front++] << " removed from the queue\n";
+            if (front == rear) front = rear = 0; 
+        }
+    }
+
+    void view() const {
+        if (front == rear) {
+            cout << "Queue is empty\n";
+        } else {
+            cout << "Queue elements: ";
+            for (int i = front; i < rear; i++) {
+                cout << queue[i] << " ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    int size, choice, value;
+    cout << "Enter the size of the queue: ";
+    cin >> size;
+
+    Queue q(size);
+
+    while (true) {
+        cout << "\n1. Insert\n2. Delete\n3. View\n4. Quit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            cout << "Enter value to insert: ";
+            cin >> value;
+            q.insert(value);
+            break;
+        case 2:
+            q.deleteElement();
+            break;
+        case 3:
+            q.view();
+            break;
+        case 4:
+            cout << "Exiting...\n";
+            return 0;
+        default:
+            cout << "Invalid choice. Try again.\n";
+        }
+    }
+}
